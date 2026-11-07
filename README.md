@@ -1,8 +1,8 @@
 # Salad Chopping Statistics for Home Assistant
 
-A custom integration that collects Salad earnings statistics every five minutes and displays them as USD sensors and dashboard graphs in Home Assistant. It only monitors your Salad account; it does not perform chopping or run workloads.
+![Salad Chopping Statistics icon](custom_components/salad_chopping/brand/icon.png)
 
-Home Assistant currently lists the integration and its device as **Salad Chopping**. The setup instructions below use that displayed name.
+A custom integration that collects Salad earnings statistics every five minutes and displays them as USD sensors and dashboard graphs in Home Assistant. It only monitors your Salad account; it does not perform chopping or run workloads.
 
 - **Current balance** shows the account balance available for redemption. It can decrease when you redeem rewards.
 - **Lifetime earnings** shows the total Salad reports for each machine. New machines appear automatically when Salad lists them.
@@ -12,8 +12,8 @@ Home Assistant currently lists the integration and its device as **Salad Choppin
 
 1. In Home Assistant 2026.11 or later, go to **Settings → Marketplace → Add from link**.
 2. Enter the [Salad Chopping Statistics repository URL](https://github.com/miyconst-ha/SaladChoppingStatsHa). Connect GitHub if prompted, then select **Add**.
-3. Open **Salad Chopping** in Marketplace and select **Install**.
-4. Follow the setup steps below. If you close the setup dialog, open **Settings → Devices & services → Add integration** and search for **Salad Chopping**.
+3. Open **Salad Chopping Statistics** in Marketplace and select **Install**.
+4. Follow the setup steps below. If you close the setup dialog, open **Settings → Devices & services → Add integration** and search for **Salad Chopping Statistics**.
 
 A first install can open setup without a restart. If Home Assistant already loaded this integration, follow the restart prompt to apply the new code.
 
@@ -21,7 +21,7 @@ A first install can open setup without a restart. If Home Assistant already load
 
 1. Sign in to the [Salad Earnings Summary](https://salad.com/earn/summary). Open your browser's developer tools, then go to **Application → Storage → Cookies → https://salad.com** in Chrome or Edge.
 2. Copy the **Value** of the cookie named `auth`.
-3. Paste the cookie value into the Salad Chopping setup dialog in Home Assistant. Read the project notice and check the risk acknowledgement box to continue. The same acknowledgement is required when reconnecting an expired session.
+3. Paste the cookie value into the Salad Chopping Statistics setup dialog in Home Assistant. Read the project notice and check the risk acknowledgement box to continue. The same acknowledgement is required when reconnecting an expired session.
 
 Treat the cookie like a password. Home Assistant stores it in the integration's configuration, so protect access to the configuration directory and backups. If Salad expires the session, follow Home Assistant's reauthentication prompt and paste a fresh cookie from the same account.
 
@@ -29,7 +29,7 @@ Treat the cookie like a password. Home Assistant stores it in the integration's 
 
 ### Add suggested charts from the dashboard editor
 
-In **Add card → By entity**, search for **Salad earnings hourly** or **Salad earnings daily** under the Salad Chopping device. Both sensors offer native **History Graph** and **Statistics Graph** suggestions for 24 hours, 7 days, and 30 days. No JavaScript resources are required.
+In **Add card → By entity**, search for **Salad earnings hourly** or **Salad earnings daily** under the Salad Chopping Statistics device. Both sensors offer native **History Graph** and **Statistics Graph** suggestions for 24 hours, 7 days, and 30 days. No JavaScript resources are required.
 
 - Select **Salad earnings hourly** for the 24-hour Statistics Graph.
 - Select **Salad earnings daily** for the 7-day and 30-day Statistics Graphs.
@@ -51,11 +51,17 @@ When upgrading from v0.2.4, replace any cards that reference **Salad earnings ra
 The dashboard uses the built-in [Statistics Graph card](https://www.home-assistant.io/dashboards/statistics-graph/). The 24-hour chart uses one completed UTC hour per point. The 7-day and 30-day charts use one completed UTC day per point. The integration imports these buckets from Salad into Recorder, so the charts can show past earnings after the first successful poll.
 
 
+## Integration icon
+
+The integration includes its green statistics icon in `custom_components/salad_chopping/brand/icon.png`. Home Assistant can display this bundled icon after installation.
+
+Before installation, Marketplace uses the brands service. It picks up icons from the latest release of integrations in the Marketplace catalog. A repository added only through a custom link may show “icon not available” before installation. Adding another icon file or renaming the integration does not resolve that catalog requirement. See [Home Assistant's brand image guidance](https://contributors.home-assistant.io/marketplace/guides/integrations/#brand-images).
+
 ## Publish a release
 
 Push the contents of this folder to a public GitHub repository so `hacs.json`, this README, and `custom_components/` are at the repository root.
 
-Publish a GitHub release tagged `v0.2.6` from the pushed commit. For later releases, update the version in `custom_components/salad_chopping/manifest.json` and use the matching GitHub release tag. Marketplace installs directly from the source tree.
+Publish a GitHub release tagged `v0.2.7` from the pushed commit. For later releases, update the version in `custom_components/salad_chopping/manifest.json` and use the matching GitHub release tag. Marketplace installs directly from the source tree.
 
 ## License
 

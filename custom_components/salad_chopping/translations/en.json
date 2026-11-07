@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Connect Salad Chopping",
+        "title": "Connect Salad Chopping Statistics",
         "description": "Enter the value of the auth cookie from your signed-in Salad dashboard.\n\nI built this integration in a few hours with AI as a hobby project. I plan to maintain it, but it is a low priority and comes with no guarantees. Use it at your own risk and keep your Salad credentials safe.\n\nSubscribe to [my YouTube channel](https://www.youtube.com/c/miyconst) to see what I am working on.",
         "data": {
           "auth_cookie": "Salad auth cookie",
@@ -10,7 +10,7 @@
         }
       },
       "reauth_confirm": {
-        "title": "Reconnect Salad Chopping",
+        "title": "Reconnect Salad Chopping Statistics",
         "description": "Sign in to the same Salad account and enter a fresh auth cookie.\n\nI built this integration in a few hours with AI as a hobby project. I plan to maintain it, but it is a low priority and comes with no guarantees. Use it at your own risk and keep your Salad credentials safe.\n\nSubscribe to [my YouTube channel](https://www.youtube.com/c/miyconst) to see what I am working on.",
         "data": {
           "auth_cookie": "Salad auth cookie",

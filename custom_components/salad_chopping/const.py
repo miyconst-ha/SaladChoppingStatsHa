@@ -1,4 +1,4 @@
-"""Constants for Salad Chopping."""
+"""Constants for Salad Chopping Statistics."""
 
 DOMAIN = "salad_chopping"
 CONF_AUTH_COOKIE = "auth_cookie"

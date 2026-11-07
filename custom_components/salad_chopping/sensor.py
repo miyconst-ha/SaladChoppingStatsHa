@@ -71,7 +71,7 @@ class SaladMoneySensor(CoordinatorEntity[SaladCoordinator], SensorEntity):
             identifiers={(DOMAIN, entry_id)},
             entry_type=DeviceEntryType.SERVICE,
             manufacturer="Salad",
-            name="Salad Chopping",
+            name="Salad Chopping Statistics",
         )
 
 

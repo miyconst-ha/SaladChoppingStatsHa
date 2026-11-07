@@ -1,6 +1,6 @@
 {
   "domain": "salad_chopping",
-  "name": "Salad Chopping",
+  "name": "Salad Chopping Statistics",
   "codeowners": [
     "@miyconst-ha"
   ],
@@ -13,5 +13,5 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/miyconst-ha/SaladChoppingStatsHa/issues",
   "requirements": [],
-  "version": "0.2.6"
+  "version": "0.2.7"
 }

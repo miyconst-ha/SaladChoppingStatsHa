@@ -1,4 +1,4 @@
-"""Home Assistant integration for Salad Chopping."""
+"""Home Assistant integration for Salad Chopping Statistics."""
 
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
@@ -73,7 +73,9 @@ SaladConfigEntry = ConfigEntry[SaladCoordinator]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: SaladConfigEntry) -> bool:
-    """Set up Salad Chopping from a config entry."""
+    """Set up Salad Chopping Statistics from a config entry."""
+    if entry.title == "Salad Chopping":
+        hass.config_entries.async_update_entry(entry, title="Salad Chopping Statistics")
     coordinator = SaladCoordinator(hass, entry)
     await coordinator.async_config_entry_first_refresh()
     entry.runtime_data = coordinator
@@ -82,5 +84,5 @@ async def async_setup_entry(hass: HomeAssistant, entry: SaladConfigEntry) -> boo
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: SaladConfigEntry) -> bool:
-    """Unload Salad Chopping."""
+    """Unload Salad Chopping Statistics."""
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)

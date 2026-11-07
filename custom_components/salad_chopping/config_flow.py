@@ -1,4 +1,4 @@
-"""Setup and reauthentication for Salad Chopping."""
+"""Setup and reauthentication for Salad Chopping Statistics."""
 
 import voluptuous as vol
 from aiohttp import DummyCookieJar
@@ -67,7 +67,7 @@ class SaladConfigFlow(ConfigFlow, domain=DOMAIN):
                         self._get_reauth_entry(), data_updates=data
                     )
                 self._abort_if_unique_id_configured()
-                return self.async_create_entry(title="Salad Chopping", data=data)
+                return self.async_create_entry(title="Salad Chopping Statistics", data=data)
             finally:
                 session.detach()
 

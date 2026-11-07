@@ -64,7 +64,7 @@ class AcknowledgementTests(unittest.TestCase):
     def test_acceptance_allows_setup_and_stores_only_cookie(self):
         self.run_step("user", {"auth_cookie": " test-cookie ", "acknowledge_risks": True})
         self.client.account_id.assert_awaited_once()
-        self.flow.async_create_entry.assert_called_once_with(title="Salad Chopping", data={"auth_cookie": "test-cookie"})
+        self.flow.async_create_entry.assert_called_once_with(title="Salad Chopping Statistics", data={"auth_cookie": "test-cookie"})
         self.session.detach.assert_called_once()
 
     def test_acceptance_allows_reauthentication(self):
