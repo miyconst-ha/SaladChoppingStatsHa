@@ -30,7 +30,7 @@ views:
             entities:
               - entity: salad_chopping:earnings_hourly_replace_with_entry_id
                 name: Chopped
-                color: "#f44336"
+                color: "#43a047"
       - type: grid
         cards:
           - type: heading
@@ -45,7 +45,7 @@ views:
             entities:
               - entity: salad_chopping:earnings_daily_replace_with_entry_id
                 name: Chopped
-                color: "#f44336"
+                color: "#43a047"
       - type: grid
         cards:
           - type: heading
@@ -60,4 +60,4 @@ views:
             entities:
               - entity: salad_chopping:earnings_daily_replace_with_entry_id
                 name: Chopped
-                color: "#f44336"
+                color: "#43a047"
