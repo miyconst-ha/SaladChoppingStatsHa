@@ -4,10 +4,12 @@ from decimal import Decimal
 
 from homeassistant.components.sensor import SensorDeviceClass, SensorEntity, SensorStateClass
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from . import SaladConfigEntry, SaladCoordinator
+from .const import DOMAIN
 from .history import WINDOWS, HistoryWindow
 
 
@@ -22,6 +24,7 @@ async def async_setup_entry(
     async_add_entities(
         [
             SaladBalanceSensor(coordinator, entry.entry_id),
+            SaladEarningsRateSensor(coordinator, entry.entry_id),
             SaladCompletedPeriodSensor(
                 coordinator, entry.entry_id, "hour", "earnings_24h"
             ),
@@ -55,6 +58,15 @@ class SaladMoneySensor(CoordinatorEntity[SaladCoordinator], SensorEntity):
     _attr_state_class = SensorStateClass.TOTAL
     _attr_suggested_display_precision = 4
 
+    def __init__(self, coordinator: SaladCoordinator, entry_id: str) -> None:
+        super().__init__(coordinator)
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, entry_id)},
+            entry_type=DeviceEntryType.SERVICE,
+            manufacturer="Salad",
+            name="Salad Chopping",
+        )
+
 
 class SaladBalanceSensor(SaladMoneySensor):
     """The account balance available for redemption."""
@@ -62,7 +74,7 @@ class SaladBalanceSensor(SaladMoneySensor):
     _attr_name = "Salad current balance"
 
     def __init__(self, coordinator: SaladCoordinator, entry_id: str) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id)
         self._attr_unique_id = f"{entry_id}_balance"
 
     @property
@@ -70,11 +82,28 @@ class SaladBalanceSensor(SaladMoneySensor):
         return self.coordinator.data.earnings.balance
 
 
+class SaladEarningsRateSensor(SaladMoneySensor):
+    """Measure how quickly the account is earning Salad balance."""
+
+    _attr_name = "Salad earnings rate"
+    _attr_device_class = None
+    _attr_native_unit_of_measurement = "USD/h"
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(self, coordinator: SaladCoordinator, entry_id: str) -> None:
+        super().__init__(coordinator, entry_id)
+        self._attr_unique_id = f"{entry_id}_earnings_rate"
+
+    @property
+    def native_value(self) -> Decimal | None:
+        return self.coordinator.data.earnings_rate
+
+
 class SaladMachineSensor(SaladMoneySensor):
     """Lifetime earnings reported for one machine."""
 
     def __init__(self, coordinator: SaladCoordinator, entry_id: str, machine_id: str) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id)
         self._machine_id = machine_id
         self._attr_unique_id = f"{entry_id}_{machine_id}_lifetime_earnings"
         name = coordinator.data.earnings.machines[machine_id].name
@@ -97,7 +126,7 @@ class SaladHistorySensor(SaladMoneySensor):
     _unrecorded_attributes = frozenset({"earnings"})
 
     def __init__(self, coordinator: SaladCoordinator, entry_id: str, window: HistoryWindow) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id)
         self._window = window
         self._attr_unique_id = f"{entry_id}_{window.key}"
         self._attr_name = window.name
@@ -132,7 +161,7 @@ class SaladCompletedPeriodSensor(SaladMoneySensor):
     def __init__(
         self, coordinator: SaladCoordinator, entry_id: str, period: str, window_key: str
     ) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id)
         self._window_key = window_key
         self._attr_unique_id = f"{entry_id}_earnings_last_completed_{period}"
         self._attr_name = f"Salad earnings last completed {period}"

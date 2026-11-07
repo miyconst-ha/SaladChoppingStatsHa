@@ -25,6 +25,14 @@ Treat the cookie like a password. Home Assistant stores it in the integration's 
 
 ## Add earnings graphs
 
+### Add suggested charts from the dashboard editor
+
+In **Add card → By entity**, select **Salad earnings rate** under **Services → Salad Chopping**, or search for it by name. Once the sensor has a numeric value, Home Assistant offers **History Graph** and **Statistics Graph** for 24 hours, 7 days, and 30 days.
+
+The rate is the earnings credited between two successful polls, expressed in USD/h. It becomes available after two polls with the same machine list and can vary with Salad's payout timing. Home Assistant records the rate going forward. Use the charts below for past hourly and daily dollar amounts imported directly from Salad.
+
+### Add Statistics Graph cards with YAML
+
 1. After Salad Chopping's first successful history poll, open **Developer tools → Statistics** and search for **Salad earnings hourly** and **Salad earnings daily**. If you have multiple Salad accounts, choose the two IDs with the same account suffix.
 2. In [salad-dashboard.yml](salad-dashboard.yml), replace the example statistic IDs with those IDs. The daily ID appears twice.
 3. Paste the YAML into the **Raw configuration editor** of a new dashboard. To add it to an existing dashboard, copy the view entry into its `views` list.
@@ -36,7 +44,7 @@ The dashboard uses the built-in [Statistics Graph card](https://www.home-assista
 
 Push the contents of this folder to a public GitHub repository so `hacs.json`, this README, and `custom_components/` are at the repository root.
 
-Publish a GitHub release tagged `v0.2.2` from the pushed commit. For later releases, update the version in `custom_components/salad_chopping/manifest.json` and use the matching GitHub release tag. Marketplace installs directly from the source tree.
+Publish a GitHub release tagged `v0.2.4` from the pushed commit. For later releases, update the version in `custom_components/salad_chopping/manifest.json` and use the matching GitHub release tag. Marketplace installs directly from the source tree.
 
 ## License
 
