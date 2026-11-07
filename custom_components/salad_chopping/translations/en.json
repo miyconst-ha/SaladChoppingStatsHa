@@ -1,0 +1,29 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect Salad Chopping",
+        "description": "Enter the value of the auth cookie from your signed-in Salad dashboard.",
+        "data": {
+          "auth_cookie": "Salad auth cookie"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reconnect Salad Chopping",
+        "description": "Sign in to the same Salad account and enter a fresh auth cookie.",
+        "data": {
+          "auth_cookie": "Salad auth cookie"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not read earnings from Salad.",
+      "invalid_auth": "Salad rejected the session cookie."
+    },
+    "abort": {
+      "already_configured": "This Salad account is already configured.",
+      "reauth_successful": "The Salad session was updated.",
+      "unique_id_mismatch": "The cookie belongs to a different Salad account."
+    }
+  }
+}

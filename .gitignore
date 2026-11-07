@@ -218,3 +218,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local configuration and credentials
+.env.*
+.storage/
+secrets.yaml
