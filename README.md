@@ -25,15 +25,18 @@ Treat the cookie like a password. Home Assistant stores it in the integration's 
 
 ## Add earnings graphs
 
-Paste [salad-dashboard.yml](salad-dashboard.yml) into the **Raw configuration editor** of a new Home Assistant dashboard. To add it to an existing dashboard, copy the view entry into that dashboard's `views` list. Adjust the entity IDs in the YAML if Home Assistant assigned different ones.
+1. After Salad Chopping's first successful history poll, open **Developer tools → Statistics** and search for **Salad earnings hourly** and **Salad earnings daily**. If you have multiple Salad accounts, choose the two IDs with the same account suffix.
+2. In [salad-dashboard.yml](salad-dashboard.yml), replace the example statistic IDs with those IDs. The daily ID appears twice.
+3. Paste the YAML into the **Raw configuration editor** of a new dashboard. To add it to an existing dashboard, copy the view entry into its `views` list.
 
-The dashboard uses the built-in [History graph card](https://www.home-assistant.io/dashboards/history-graph/). It plots the amount for the latest completed UTC hour or day when Home Assistant records each sensor update. The graphs fill in from the first successful poll after installation and cannot display earlier Salad history. For the full 30-day view, keep at least 30 days of [Recorder history](https://www.home-assistant.io/integrations/recorder/) and make sure Recorder includes both completed-period sensors.
+The dashboard uses the built-in [Statistics Graph card](https://www.home-assistant.io/dashboards/statistics-graph/). The 24-hour chart uses one completed UTC hour per point. The 7-day and 30-day charts use one completed UTC day per point. The integration imports these buckets from Salad into Recorder, so the charts can show past earnings after the first successful poll.
+
 
 ## Publish a release
 
 Push the contents of this folder to a public GitHub repository so `hacs.json`, this README, and `custom_components/` are at the repository root.
 
-Publish a GitHub release tagged `v0.2.1` from the pushed commit. For later releases, update the version in `custom_components/salad_chopping/manifest.json` and use the matching GitHub release tag. Marketplace installs directly from the source tree.
+Publish a GitHub release tagged `v0.2.2` from the pushed commit. For later releases, update the version in `custom_components/salad_chopping/manifest.json` and use the matching GitHub release tag. Marketplace installs directly from the source tree.
 
 ## License
 

@@ -16,6 +16,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from .api import Earnings, SaladAuthError, SaladClient, SaladError
 from .const import CONF_AUTH_COOKIE
 from .history import WINDOWS
+from .statistics import publish_statistics
 
 PLATFORMS = [Platform.SENSOR]
 LOGGER = logging.getLogger(__name__)
@@ -42,6 +43,7 @@ class SaladCoordinator(DataUpdateCoordinator[SaladData]):
             always_update=False,
         )
         session = async_create_clientsession(hass, cookie_jar=DummyCookieJar())
+        self._entry_id = entry.entry_id
         self.client = SaladClient(session, entry.data[CONF_AUTH_COOKIE])
 
     async def _async_update_data(self) -> SaladData:
@@ -60,7 +62,11 @@ class SaladCoordinator(DataUpdateCoordinator[SaladData]):
             return SaladData(earnings, None)
 
         now = datetime.now(UTC)
-        return SaladData(earnings, {window.key: window.buckets(hourly, now) for window in WINDOWS})
+        history = {window.key: window.buckets(hourly, now) for window in WINDOWS}
+        publish_statistics(
+            self.hass, self._entry_id, history, self.data.history if self.data else None
+        )
+        return SaladData(earnings, history)
 
 
 SaladConfigEntry = ConfigEntry[SaladCoordinator]

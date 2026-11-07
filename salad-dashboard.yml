@@ -1,7 +1,7 @@
-# Requires Salad Chopping v0.2.1 or later.
-# Paste into the Raw configuration editor of a new dashboard.
-# For an existing dashboard, copy this entry into its views list.
-# Adjust the sensor entity IDs if they differ on your Home Assistant instance.
+# Requires Salad Chopping v0.2.2 or later.
+# Replace the two statistic IDs with yours from Developer tools > Statistics.
+# Paste into a new dashboard's Raw configuration editor, or copy the view
+# entry into the views list of an existing dashboard.
 title: Salad Performance
 views:
   - title: Salad Performance
@@ -21,31 +21,43 @@ views:
           - type: heading
             icon: mdi:chart-areaspline
             heading: Earnings · 24 hours
-          - type: history-graph
-            hours_to_show: 24
+          - type: statistics-graph
+            chart_type: line
+            days_to_show: 1
+            period: hour
+            stat_types:
+              - mean
             entities:
-              - entity: sensor.salad_earnings_last_completed_hour
-                name: Earnings per hour
+              - entity: salad_chopping:earnings_hourly_replace_with_entry_id
+                name: Chopped
                 color: "#f44336"
       - type: grid
         cards:
           - type: heading
             icon: mdi:chart-areaspline
             heading: Earnings · 7 days
-          - type: history-graph
-            hours_to_show: 168
+          - type: statistics-graph
+            chart_type: line
+            days_to_show: 7
+            period: day
+            stat_types:
+              - mean
             entities:
-              - entity: sensor.salad_earnings_last_completed_day
-                name: Earnings per day
+              - entity: salad_chopping:earnings_daily_replace_with_entry_id
+                name: Chopped
                 color: "#f44336"
       - type: grid
         cards:
           - type: heading
             icon: mdi:chart-areaspline
             heading: Earnings · 30 days
-          - type: history-graph
-            hours_to_show: 720
+          - type: statistics-graph
+            chart_type: line
+            days_to_show: 30
+            period: day
+            stat_types:
+              - mean
             entities:
-              - entity: sensor.salad_earnings_last_completed_day
-                name: Earnings per day
+              - entity: salad_chopping:earnings_daily_replace_with_entry_id
+                name: Chopped
                 color: "#f44336"

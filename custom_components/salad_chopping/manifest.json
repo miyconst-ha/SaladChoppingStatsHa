@@ -3,10 +3,11 @@
   "name": "Salad Chopping",
   "codeowners": ["@miyconst-ha"],
   "config_flow": true,
+  "dependencies": ["recorder"],
   "documentation": "https://github.com/miyconst-ha/SaladChoppingStatsHa#readme",
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/miyconst-ha/SaladChoppingStatsHa/issues",
   "requirements": [],
-  "version": "0.2.1"
+  "version": "0.2.2"
 }
