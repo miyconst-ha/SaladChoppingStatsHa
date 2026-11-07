@@ -9,7 +9,7 @@ A custom integration that polls Salad every five minutes and adds USD sensors.
 ## Install from Home Assistant Marketplace
 
 1. In Home Assistant 2026.11 or later, go to **Settings → Marketplace → Add from link**.
-2. Enter the public GitHub URL of this repository. Connect GitHub if prompted, then select **Add**.
+2. Enter the [Salad Chopping repository URL](https://github.com/miyconst-ha/SaladChoppingStatsHa). Connect GitHub if prompted, then select **Add**.
 3. Open **Salad Chopping** in Marketplace and select **Install**.
 4. Follow the setup steps below. If you close the setup dialog, open **Settings → Devices & services → Add integration** and search for **Salad Chopping**.
 
@@ -78,6 +78,6 @@ Publish a GitHub release tagged `v0.2.0` from the pushed commit. For later relea
 
 ## License
 
-Copyright 2026 Salad Chopping contributors.
+Copyright 2026 [miyconst-ha](https://github.com/miyconst-ha).
 
 Salad Chopping is licensed under the [Apache License 2.0](LICENSE).

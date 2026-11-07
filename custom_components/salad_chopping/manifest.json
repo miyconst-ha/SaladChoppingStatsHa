@@ -1,7 +1,7 @@
 {
   "domain": "salad_chopping",
   "name": "Salad Chopping",
-  "codeowners": ["@Miyconst"],
+  "codeowners": ["@miyconst-ha"],
   "config_flow": true,
   "documentation": "https://github.com/miyconst-ha/SaladChoppingStatsHa#readme",
   "integration_type": "service",
