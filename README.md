@@ -27,9 +27,18 @@ Treat the cookie like a password. Home Assistant stores it in the integration's 
 
 ### Add suggested charts from the dashboard editor
 
-In **Add card → By entity**, select **Salad earnings rate** under **Services → Salad Chopping**, or search for it by name. Once the sensor has a numeric value, Home Assistant offers **History Graph** and **Statistics Graph** for 24 hours, 7 days, and 30 days.
+In **Add card → By entity**, search for **Salad earnings hourly** or **Salad earnings daily** under the Salad Chopping device. Both sensors offer native **History Graph** and **Statistics Graph** suggestions for 24 hours, 7 days, and 30 days. No JavaScript resources are required.
 
-The rate is the earnings credited between two successful polls, expressed in USD/h. It becomes available after two polls with the same machine list and can vary with Salad's payout timing. Home Assistant records the rate going forward. Use the charts below for past hourly and daily dollar amounts imported directly from Salad.
+- Select **Salad earnings hourly** for the 24-hour Statistics Graph.
+- Select **Salad earnings daily** for the 7-day and 30-day Statistics Graphs.
+
+The integration imports completed UTC earnings buckets from Salad under each sensor's actual entity ID, including renamed IDs and IDs for multiple accounts. Statistics Graphs have API history after the first successful history fetch and Recorder import, without waiting for Home Assistant to collect weeks of data. The sensor's current value is the last completed hour or day in USD.
+
+Home Assistant chooses the suggested cards' colors and mean/min/max lines. For the green, mean-only layout, use the YAML template below. Daily aggregation follows Home Assistant's configured time zone, so a local day crossing UTC buckets can blend adjacent UTC daily totals. For exact UTC daily points, the existing external daily statistic and YAML template remain available.
+
+**History Graph** uses state history collected since installation. It cannot backfill state history from imported statistics. On Statistics Graphs, unfinished UTC periods may contain Home Assistant's live samples until Salad supplies the completed bucket. API imports replace those samples for completed periods.
+
+When upgrading from v0.2.4, replace any cards that reference **Salad earnings rate** with suggestions from the hourly or daily sensor. The rate sensor is removed. Existing last-completed-hour/day sensors keep their entity IDs and acquire the new hourly/daily names, unless you have set custom names. Existing YAML cards using external Salad statistics continue working.
 
 ### Add Statistics Graph cards with YAML
 
@@ -44,7 +53,7 @@ The dashboard uses the built-in [Statistics Graph card](https://www.home-assista
 
 Push the contents of this folder to a public GitHub repository so `hacs.json`, this README, and `custom_components/` are at the repository root.
 
-Publish a GitHub release tagged `v0.2.4` from the pushed commit. For later releases, update the version in `custom_components/salad_chopping/manifest.json` and use the matching GitHub release tag. Marketplace installs directly from the source tree.
+Publish a GitHub release tagged `v0.2.5` from the pushed commit. For later releases, update the version in `custom_components/salad_chopping/manifest.json` and use the matching GitHub release tag. Marketplace installs directly from the source tree.
 
 ## License
 

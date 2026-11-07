@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from decimal import Decimal
 import logging
-from time import monotonic_ns
 
 from aiohttp import DummyCookieJar
 from homeassistant.config_entries import ConfigEntry
@@ -29,29 +28,6 @@ class SaladData:
 
     earnings: Earnings
     history: dict[str, dict[datetime, Decimal]] | None
-    sampled_at_ns: int
-    earnings_rate: Decimal | None
-
-
-def _earnings_rate(
-    previous: SaladData | None, earnings: Earnings, sampled_at_ns: int
-) -> Decimal | None:
-    """Measure credited earnings per hour between successful polls."""
-    if previous is None or sampled_at_ns <= previous.sampled_at_ns:
-        return None
-    previous_machines = previous.earnings.machines
-    if previous_machines.keys() != earnings.machines.keys():
-        return None
-
-    change = Decimal(0)
-    for machine_id, machine in earnings.machines.items():
-        delta = machine.lifetime_earnings - previous_machines[machine_id].lifetime_earnings
-        if delta < 0:
-            return None
-        change += delta
-
-    elapsed_ns = sampled_at_ns - previous.sampled_at_ns
-    return change * Decimal(3_600_000_000_000) / elapsed_ns
 
 
 class SaladCoordinator(DataUpdateCoordinator[SaladData]):
@@ -78,22 +54,19 @@ class SaladCoordinator(DataUpdateCoordinator[SaladData]):
         except SaladError as err:
             raise UpdateFailed(str(err)) from err
 
-        sampled_at_ns = monotonic_ns()
-        earnings_rate = _earnings_rate(self.data, earnings, sampled_at_ns)
-
         try:
             hourly = await self.client.hourly_history(earnings.machines)
         except SaladError as err:
             if self.data is None or self.data.history is not None:
                 LOGGER.warning("Could not update Salad earnings history: %s", err)
-            return SaladData(earnings, None, sampled_at_ns, earnings_rate)
+            return SaladData(earnings, None)
 
         now = datetime.now(UTC)
         history = {window.key: window.buckets(hourly, now) for window in WINDOWS}
         publish_statistics(
             self.hass, self._entry_id, history, self.data.history if self.data else None
         )
-        return SaladData(earnings, history, sampled_at_ns, earnings_rate)
+        return SaladData(earnings, history)
 
 
 SaladConfigEntry = ConfigEntry[SaladCoordinator]
