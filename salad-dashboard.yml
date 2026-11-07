@@ -19,8 +19,8 @@ views:
       - type: grid
         cards:
           - type: heading
-            icon: mdi:chart-areaspline
-            heading: Earnings · 24 hours
+            icon: mdi:currency-usd
+            heading: Earnings - 24 hours
           - type: statistics-graph
             chart_type: line
             days_to_show: 1
@@ -34,8 +34,8 @@ views:
       - type: grid
         cards:
           - type: heading
-            icon: mdi:chart-areaspline
-            heading: Earnings · 7 days
+            icon: mdi:currency-usd
+            heading: Earnings - days
           - type: statistics-graph
             chart_type: line
             days_to_show: 7
@@ -49,8 +49,8 @@ views:
       - type: grid
         cards:
           - type: heading
-            icon: mdi:chart-areaspline
-            heading: Earnings · 30 days
+            icon: mdi:currency-usd
+            heading: Earnings - 30 days
           - type: statistics-graph
             chart_type: line
             days_to_show: 30
