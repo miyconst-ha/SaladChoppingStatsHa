@@ -3,22 +3,25 @@
     "step": {
       "user": {
         "title": "Connect Salad Chopping",
-        "description": "Enter the value of the auth cookie from your signed-in Salad dashboard.",
+        "description": "Enter the value of the auth cookie from your signed-in Salad dashboard.\n\nI built this integration in a few hours with AI as a hobby project. I plan to maintain it, but it is a low priority and comes with no guarantees. Use it at your own risk and keep your Salad credentials safe.\n\nSubscribe to [my YouTube channel](https://www.youtube.com/c/miyconst) to see what I am working on.",
         "data": {
-          "auth_cookie": "Salad auth cookie"
+          "auth_cookie": "Salad auth cookie",
+          "acknowledge_risks": "I understand all the risks and still want to proceed."
         }
       },
       "reauth_confirm": {
         "title": "Reconnect Salad Chopping",
-        "description": "Sign in to the same Salad account and enter a fresh auth cookie.",
+        "description": "Sign in to the same Salad account and enter a fresh auth cookie.\n\nI built this integration in a few hours with AI as a hobby project. I plan to maintain it, but it is a low priority and comes with no guarantees. Use it at your own risk and keep your Salad credentials safe.\n\nSubscribe to [my YouTube channel](https://www.youtube.com/c/miyconst) to see what I am working on.",
         "data": {
-          "auth_cookie": "Salad auth cookie"
+          "auth_cookie": "Salad auth cookie",
+          "acknowledge_risks": "I understand all the risks and still want to proceed."
         }
       }
     },
     "error": {
       "cannot_connect": "Could not read earnings from Salad.",
-      "invalid_auth": "Salad rejected the session cookie."
+      "invalid_auth": "Salad rejected the session cookie.",
+      "acknowledgement_required": "Please acknowledge the risks to continue."
     },
     "abort": {
       "already_configured": "This Salad account is already configured.",

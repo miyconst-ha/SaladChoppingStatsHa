@@ -8,10 +8,15 @@ from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from homeassistant.helpers.selector import TextSelector, TextSelectorConfig, TextSelectorType
 
 from .api import SaladAuthError, SaladClient, SaladError
-from .const import CONF_AUTH_COOKIE, DOMAIN
+from .const import CONF_ACKNOWLEDGE_RISKS, CONF_AUTH_COOKIE, DOMAIN
 
 COOKIE_SCHEMA = vol.Schema(
-    {vol.Required(CONF_AUTH_COOKIE): TextSelector(TextSelectorConfig(type=TextSelectorType.PASSWORD))}
+    {
+        vol.Required(CONF_AUTH_COOKIE): TextSelector(
+            TextSelectorConfig(type=TextSelectorType.PASSWORD)
+        ),
+        vol.Required(CONF_ACKNOWLEDGE_RISKS, default=False): bool,
+    }
 )
 
 
@@ -32,6 +37,14 @@ class SaladConfigFlow(ConfigFlow, domain=DOMAIN):
 
     async def _async_cookie_step(self, step_id, user_input) -> ConfigFlowResult:
         errors = {}
+        if user_input is not None and user_input.get(CONF_ACKNOWLEDGE_RISKS) is not True:
+            # A required boolean can still be false. Enforce explicit consent
+            # before opening a session or sending the cookie to Salad.
+            return self.async_show_form(
+                step_id=step_id,
+                data_schema=COOKIE_SCHEMA,
+                errors={CONF_ACKNOWLEDGE_RISKS: "acknowledgement_required"},
+            )
         if user_input is not None:
             cookie = user_input[CONF_AUTH_COOKIE].strip()
             session = async_create_clientsession(

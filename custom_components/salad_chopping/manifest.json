@@ -1,13 +1,17 @@
 {
   "domain": "salad_chopping",
   "name": "Salad Chopping",
-  "codeowners": ["@miyconst-ha"],
+  "codeowners": [
+    "@miyconst-ha"
+  ],
   "config_flow": true,
-  "dependencies": ["recorder"],
+  "dependencies": [
+    "recorder"
+  ],
   "documentation": "https://github.com/miyconst-ha/SaladChoppingStatsHa#readme",
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/miyconst-ha/SaladChoppingStatsHa/issues",
   "requirements": [],
-  "version": "0.2.5"
+  "version": "0.2.6"
 }
