@@ -22,6 +22,12 @@ async def async_setup_entry(
     async_add_entities(
         [
             SaladBalanceSensor(coordinator, entry.entry_id),
+            SaladCompletedPeriodSensor(
+                coordinator, entry.entry_id, "hour", "earnings_24h"
+            ),
+            SaladCompletedPeriodSensor(
+                coordinator, entry.entry_id, "day", "earnings_7d"
+            ),
             *(SaladHistorySensor(coordinator, entry.entry_id, window) for window in WINDOWS),
         ]
     )
@@ -116,3 +122,32 @@ class SaladHistorySensor(SaladMoneySensor):
                 for start, amount in history[self._window.key].items()
             ]
         }
+
+
+class SaladCompletedPeriodSensor(SaladMoneySensor):
+    """Expose the last completed UTC bucket for Home Assistant's history graph."""
+
+    _attr_state_class = None
+
+    def __init__(
+        self, coordinator: SaladCoordinator, entry_id: str, period: str, window_key: str
+    ) -> None:
+        super().__init__(coordinator)
+        self._window_key = window_key
+        self._attr_unique_id = f"{entry_id}_earnings_last_completed_{period}"
+        self._attr_name = f"Salad earnings last completed {period}"
+
+    @property
+    def available(self) -> bool:
+        return super().available and self.coordinator.data.history is not None
+
+    @property
+    def native_value(self) -> Decimal | None:
+        history = self.coordinator.data.history
+        if history is None:
+            return None
+        # Buckets are chronological and the last one is still in progress.
+        buckets = history[self._window_key]
+        latest_buckets = reversed(buckets.values())
+        next(latest_buckets)
+        return next(latest_buckets)

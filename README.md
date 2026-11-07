@@ -25,56 +25,15 @@ Treat the cookie like a password. Home Assistant stores it in the integration's 
 
 ## Add earnings graphs
 
-Install [ApexCharts Card](https://github.com/RomRider/apexcharts-card), then paste the following into a manual card on your Home Assistant dashboard. Adjust the entity IDs if Home Assistant assigned different ones.
+Paste [salad-dashboard.yml](salad-dashboard.yml) into the **Raw configuration editor** of a new Home Assistant dashboard. To add it to an existing dashboard, copy the view entry into that dashboard's `views` list. Adjust the entity IDs in the YAML if Home Assistant assigned different ones.
 
-```yaml
-type: vertical-stack
-cards:
-  - type: custom:apexcharts-card
-    graph_span: 24h
-    header:
-      show: true
-      title: Hourly earnings · Last 24 hours
-    series:
-      - entity: sensor.salad_earnings_24h
-        type: column
-        unit: USD
-        float_precision: 4
-        data_generator: |
-          return entity.attributes.earnings ?? [];
-  - type: custom:apexcharts-card
-    graph_span: 7d
-    header:
-      show: true
-      title: Daily earnings · Last 7 days
-    series:
-      - entity: sensor.salad_earnings_7d
-        type: column
-        unit: USD
-        float_precision: 4
-        data_generator: |
-          return entity.attributes.earnings ?? [];
-  - type: custom:apexcharts-card
-    graph_span: 30d
-    header:
-      show: true
-      title: Daily earnings · Last 30 days
-    series:
-      - entity: sensor.salad_earnings_30d
-        type: column
-        unit: USD
-        float_precision: 4
-        data_generator: |
-          return entity.attributes.earnings ?? [];
-```
-
-The graphs use history from Salad's dashboard API and can display it as soon as the first poll succeeds. Each window sums earnings across the machines Salad currently lists for the account. Buckets use UTC boundaries and include the current partial hour or day. Empty buckets display zero after a successful history fetch. If the history request fails, the three window sensors become unavailable until a later poll succeeds.
+The dashboard uses the built-in [History graph card](https://www.home-assistant.io/dashboards/history-graph/). It plots the amount for the latest completed UTC hour or day when Home Assistant records each sensor update. The graphs fill in from the first successful poll after installation and cannot display earlier Salad history. For the full 30-day view, keep at least 30 days of [Recorder history](https://www.home-assistant.io/integrations/recorder/) and make sure Recorder includes both completed-period sensors.
 
 ## Publish a release
 
 Push the contents of this folder to a public GitHub repository so `hacs.json`, this README, and `custom_components/` are at the repository root.
 
-Publish a GitHub release tagged `v0.2.0` from the pushed commit. For later releases, update the version in `custom_components/salad_chopping/manifest.json` and use the matching GitHub release tag. Marketplace installs directly from the source tree.
+Publish a GitHub release tagged `v0.2.1` from the pushed commit. For later releases, update the version in `custom_components/salad_chopping/manifest.json` and use the matching GitHub release tag. Marketplace installs directly from the source tree.
 
 ## License
 

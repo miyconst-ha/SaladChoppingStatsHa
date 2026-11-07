@@ -1,0 +1,51 @@
+# Requires Salad Chopping v0.2.1 or later.
+# Paste into the Raw configuration editor of a new dashboard.
+# For an existing dashboard, copy this entry into its views list.
+# Adjust the sensor entity IDs if they differ on your Home Assistant instance.
+title: Salad Performance
+views:
+  - title: Salad Performance
+    path: salad-performance
+    icon: mdi:chart-areaspline
+    type: sections
+    max_columns: 3
+    header:
+      layout: center
+      card:
+        type: markdown
+        content: "# Salad Performance"
+        text_only: true
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            icon: mdi:chart-areaspline
+            heading: Earnings · 24 hours
+          - type: history-graph
+            hours_to_show: 24
+            entities:
+              - entity: sensor.salad_earnings_last_completed_hour
+                name: Earnings per hour
+                color: "#f44336"
+      - type: grid
+        cards:
+          - type: heading
+            icon: mdi:chart-areaspline
+            heading: Earnings · 7 days
+          - type: history-graph
+            hours_to_show: 168
+            entities:
+              - entity: sensor.salad_earnings_last_completed_day
+                name: Earnings per day
+                color: "#f44336"
+      - type: grid
+        cards:
+          - type: heading
+            icon: mdi:chart-areaspline
+            heading: Earnings · 30 days
+          - type: history-graph
+            hours_to_show: 720
+            entities:
+              - entity: sensor.salad_earnings_last_completed_day
+                name: Earnings per day
+                color: "#f44336"
